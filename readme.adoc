@@ -1,5 +1,12 @@
 = Simple Counters
 
+image:https://img.shields.io/github/v/tag/foxcapades/tally-go[GitHub tag (latest SemVer)]
+image:https://img.shields.io/github/go-mod/go-version/foxcapades/tally-go[GitHub go.mod Go version]
+image:https://img.shields.io/github/license/foxcapades/tally-go[GitHub]
+image:https://img.shields.io/badge/api-docs-ff69b4[title="API Docs", link=https://pkg.go.dev/github.com/foxcapades/tally-go/v0/bytify]
+image:https://github.com/Foxcapades/tally-go/workflows/Go/badge.svg[Go]
+image:https://codecov.io/gh/Foxcapades/tally-go/branch/main/graph/badge.svg?token=E4WD9IURJL[title=codecov, link=https://codecov.io/gh/Foxcapades/tally-go]
+
 A set of counters for each of the standard Go integer types.
 
 [source,go]
