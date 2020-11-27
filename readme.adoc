@@ -1,0 +1,25 @@
+= Simple Counters
+
+A set of counters for each of the standard Go integer types.
+
+[source,go]
+----
+package main
+
+import (
+  "fmt"
+  "github.com/foxcapades/tally-go/v1/tally"
+)
+
+func main() {
+  // create a new int8 tally wrapping a starting value of 5
+  count := tally.ITally8(5)
+
+  fmt.Println(count.Inc())   // 5
+  fmt.Println(count.Dec())   // 6
+  fmt.Println(count.Add(15)) // 5
+  fmt.Println(count.Sub(10)) // 20
+  fmt.Println(count.Zero())  // 10
+  fmt.Println(count.Cur())   // 0
+}
+----
