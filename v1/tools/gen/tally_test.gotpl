@@ -1,0 +1,104 @@
+{{- /*gotype: github.com/foxcapades/tally-go/v1/tools/gen.Data */ -}}
+{{ define "test" -}}
+package tally_test
+
+import (
+	"testing"
+
+	. "github.com/smartystreets/goconvey/convey"
+
+	"github.com/foxcapades/tally-go/v1/tally"
+)
+
+{{- $root := . -}}
+{{- range $suffix := .Suffixes -}}
+{{- $name := printf "%s%s" $root.Name $suffix -}}
+{{- $type := printf "%s%s" $root.Type $suffix }}
+
+func Test{{ $name }}_Cur(t *testing.T) {
+	Convey("{{ $name }}.Cur", t, func() {
+		Convey("Should return the current tally value", func() {
+			test := tally.{{ $name }}(13)
+			So(test.Cur(), ShouldEqual, 13)
+			test = 35
+			So(test.Cur(), ShouldEqual, 35)
+		})
+	})
+}
+
+func Test{{ $name }}_Add(t *testing.T) {
+	Convey("{{ $name }}.Add", t, func() {
+		Convey("Should return the previous tally value on call", func() {
+			test := tally.{{ $name }}(13)
+			So(test.Add(10), ShouldEqual, 13)
+		})
+
+		Convey("Should increment the tally counter by the given value", func() {
+			test := tally.{{ $name }}(13)
+			test.Add(10)
+			So(test, ShouldEqual, 23)
+		})
+	})
+}
+
+func Test{{ $name }}_Inc(t *testing.T) {
+	Convey("{{ $name }}.Inc", t, func() {
+		Convey("Should return the previous tally value on call", func() {
+			test := tally.{{ $name }}(13)
+			So(test.Inc(), ShouldEqual, 13)
+		})
+
+		Convey("Should increment the tally counter by 1", func() {
+			test := tally.{{ $name }}(13)
+			test.Inc()
+			So(test, ShouldEqual, 14)
+		})
+	})
+}
+
+func Test{{ $name }}_Dec(t *testing.T) {
+	Convey("{{ $name }}.Dec", t, func() {
+		Convey("Should return the previous tally value on call", func() {
+			test := tally.{{ $name }}(13)
+			So(test.Dec(), ShouldEqual, 13)
+		})
+
+		Convey("Should decrement the tally counter by 1", func() {
+			test := tally.{{ $name }}(13)
+			test.Dec()
+			So(test, ShouldEqual, 12)
+		})
+	})
+}
+
+func Test{{ $name }}_Sub(t *testing.T) {
+	Convey("{{ $name }}.Sub", t, func() {
+		Convey("Should return the previous tally value on call", func() {
+			test := tally.{{ $name }}(13)
+			So(test.Sub(10), ShouldEqual, 13)
+		})
+
+		Convey("Should decrement the tally counter by 1", func() {
+			test := tally.{{ $name }}(13)
+			test.Sub(10)
+			So(test, ShouldEqual, 3)
+		})
+	})
+}
+
+func Test{{ $name }}_Zero(t *testing.T) {
+	Convey("{{ $name }}.Zero", t, func() {
+		Convey("Should return the previous tally value on call", func() {
+			test := tally.{{ $name }}(13)
+			So(test.Zero(), ShouldEqual, 13)
+		})
+
+		Convey("Should set the tally value to 0", func() {
+			test := tally.{{ $name }}(13)
+			test.Zero()
+			So(test, ShouldEqual, 0)
+		})
+	})
+}
+{{- end }}
+{{- end }}

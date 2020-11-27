@@ -1,0 +1,63 @@
+{{- /*gotype: github.com/foxcapades/tally-go/v1/tools/gen.Data */ -}}
+{{ define "tally" -}}
+package tally
+
+{{- $root := . -}}
+{{- range $suffix := .Suffixes -}}
+{{- $name := printf "%s%s" $root.Name $suffix -}}
+{{- $type := printf "%s%s" $root.Type $suffix }}
+
+// {{ $name }} is a counter of type {{ $type }}.
+type {{ $name }} {{ $type }}
+
+// Cur returns the current {{ $type }} value of this {{ $name }}.
+func (t {{ $name }}) Cur() {{ $type }} {
+	return {{ $type }}(t)
+}
+
+// Add increases this counter by the given value, returning the previous
+// {{ $type }} value of this {{ $name }}.
+func (t *{{ $name }}) Add(i {{ $type }}) (cur {{ $type }}) {
+	cur = {{ $type }}(*t)
+	*t += {{ $name }}(i)
+
+	return
+}
+
+// Inc increases this counter by 1, returning the previous {{ $type }} value of
+// this {{ $name }}.
+func (t *{{ $name }}) Inc() (cur {{ $type }}) {
+	cur = {{ $type }}(*t)
+	*t++
+
+	return
+}
+
+// Dec decreases this counter by 1, returning the previous {{ $type }} value of
+// this {{ $name }}.
+func (t *{{ $name }}) Dec() (cur {{ $type }}) {
+	cur = {{ $type }}(*t)
+	*t--
+
+	return
+}
+
+// Sub decreases this counter by the given value, returning the previous
+// {{ $type }} value of this {{ $name }}.
+func (t *{{ $name }}) Sub(i {{ $type }}) (cur {{ $type }}) {
+	cur = {{ $type }}(*t)
+	*t -= {{ $name }}(i)
+
+	return
+}
+
+// Zero sets the current counter value to 0, returning the previous {{ $type }}
+// value of this {{ $name }}.
+func (t *{{ $name }}) Zero() (cur {{ $type }}) {
+	cur = {{ $type }}(*t)
+	*t = 0
+
+	return
+}
+{{- end }}
+{{- end }}
